@@ -1,8 +1,39 @@
 import { Box, Button, HStack, Text, VStack } from 'native-base';
+import React, { useEffect, useState } from 'react';
+import { useToast } from 'native-base';
 
+interface IDashboardProps {
 
-export const Dashboard: React.FC = () => {
- 
+}
+
+export const Dashboard: React.FC<IDashboardProps> = () => {
+  const [cupSize, setCupSize] = useState<number>(300);
+  const [water, setWater] = useState<number>(0);
+  const [goal, setGoal] = useState<number>(2000);
+
+  const toast = useToast();
+
+  const handleWater = () => {
+    setWater(water + cupSize);
+    toast.show({
+      description: `Você bebeu ${cupSize}ml de água`,
+    })
+  };
+
+  const handleChangeCupSize = (size: number) => {
+    setCupSize(size);
+  };
+
+  useEffect(() => {
+    if (water >= goal) {
+      toast.show({
+        description: "Você atingiu sua meta de água",
+        placement: "top",
+        colorScheme: "success",
+      })
+    }
+  }, [water]);
+
   return (
     <VStack
       flex={1}
@@ -13,17 +44,17 @@ export const Dashboard: React.FC = () => {
       my={30}
     >
       <Text fontSize="sm">
-        {'  '} copo de 200 ml
+        {'  '} copo de {cupSize}ml
       </Text>
 
 
       <VStack>
         <HStack alignItems="center" justifyContent="center">
           <Text fontSize="6xl">
-            0
+            {water}
           </Text>
           <Text fontSize="xl">
-            {'  '}/ 200 ml
+            {'  '}/ {goal} ml
           </Text>
         </HStack>
 
@@ -31,7 +62,8 @@ export const Dashboard: React.FC = () => {
 
         <Button
           mt={5}
-          colorScheme="primary"         
+          colorScheme="primary"
+          onPress={handleWater}
         >
           Beber água
         </Button>
@@ -39,13 +71,13 @@ export const Dashboard: React.FC = () => {
 
       <Box mt={10}>
         <Button.Group >
-          <Button  colorScheme="teal">
+          <Button onPress={() => handleChangeCupSize(200)} colorScheme="teal">
             Copo americano
           </Button>
-          <Button  colorScheme="teal">
+          <Button onPress={() => handleChangeCupSize(350)} colorScheme="teal">
             Xicára
           </Button>
-          <Button  colorScheme="teal">
+          <Button onPress={() => handleChangeCupSize(500)} colorScheme="teal">
             Garrafa
           </Button>
         </Button.Group>
