@@ -6,7 +6,7 @@ interface IDashboardProps {
 
 }
 
-export const Dashboard: React.FC<IDashboardProps> = () => {
+export const DashboardScreen: React.FC<IDashboardProps> = () => {
   const [cupSize, setCupSize] = useState<number>(300);
   const [water, setWater] = useState<number>(0);
   const [goal, setGoal] = useState<number>(2000);
