@@ -8,7 +8,7 @@ interface ProfileScreenProps {
 
 export const ProfileScreen: React.FC<ProfileScreenProps> = ({
 }) => {
-  const { goal, setGoal, user } = useContext(UserContext);
+  const {  goal, storeData, user, getData} = useContext(UserContext);
 
   return (
     <SafeAreaView>
@@ -37,7 +37,7 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           value={goal}
           minValue={0}
           maxValue={4000}
-          onChange={(value) => setGoal(value)}
+          onChange={(value) => storeData(value)}
           step={100}
         >
           <Slider.Track>
