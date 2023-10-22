@@ -1,23 +1,26 @@
+import React, { useContext, useState } from 'react';
 import { Avatar, Box, Divider, Slider, Text } from 'native-base';
-import { useState } from 'react';
 import { SafeAreaView } from 'react-native';
+import { UserContext } from '../contexts/UserContext';
 
 interface ProfileScreenProps {
 }
 
 export const ProfileScreen: React.FC<ProfileScreenProps> = ({
 }) => {
-  const [meta, setMeta] = useState<number>(2000)
+  const { goal, setGoal, user } = useContext(UserContext);
 
   return (
     <SafeAreaView>
-      <Avatar bg="purple.500" mt="20" alignSelf="center" size="2xl" source={{
-        uri: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80',
+
+       <Avatar bg="purple.500" mt={20} alignSelf="center" size="2xl" source={{
+        uri: user?.photo || undefined,
       }}>
-        xx
+        {user?.name.substring(0, 1)}
       </Avatar>
+
       <Text fontSize="2xl" textAlign="center" mt={4}>
-        Evandro
+         {user?.name}
       </Text>
 
       <Divider my={10} />
@@ -27,14 +30,14 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           Goal de água
         </Text>
         <Text fontSize="xl" textAlign="center" mt={4}>
-          {meta }ml
+          {goal }ml
         </Text>
         <Slider
-          defaultValue={meta}
-          value={meta}
+          defaultValue={goal}
+          value={goal}
           minValue={0}
           maxValue={4000}
-          onChange={(value) => setMeta(value)}
+          onChange={(value) => setGoal(value)}
           step={100}
         >
           <Slider.Track>
