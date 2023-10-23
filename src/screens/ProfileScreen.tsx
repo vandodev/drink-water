@@ -1,14 +1,16 @@
 import React, { useContext, useState } from 'react';
-import { Avatar, Box, Divider, Slider, Text } from 'native-base';
+import { Avatar, Box,Button,Input, Divider, Slider, Text } from 'native-base';
 import { SafeAreaView } from 'react-native';
 import { UserContext } from '../contexts/UserContext';
+import { usePersistState } from "../hooks/usePersistState";
+
 
 interface ProfileScreenProps {
 }
 
 export const ProfileScreen: React.FC<ProfileScreenProps> = ({
 }) => {
-  const {  goal, storeData, user, getData} = useContext(UserContext);
+   const { goal, user, setGoal, setUser } = useContext(UserContext);
 
   return (
     <SafeAreaView>
@@ -23,6 +25,18 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
          {user?.name}
       </Text>
 
+      <Input
+        defaultValue={user?.name}
+        onChangeText={(value) => {
+          setUser({
+            name: value,
+            photo: String(user?.photo),
+          });
+        }}
+        placeholder="Default Input"
+      />
+
+
       <Divider my={10} />
 
       <Box mx={20}>
@@ -30,14 +44,16 @@ export const ProfileScreen: React.FC<ProfileScreenProps> = ({
           Goal de água
         </Text>
         <Text fontSize="xl" textAlign="center" mt={4}>
-          {goal }ml
+          {goal}ml
         </Text>
+
+
         <Slider
           defaultValue={goal}
           value={goal}
           minValue={0}
           maxValue={4000}
-          onChange={(value) => storeData(value)}
+          onChange={(value) => setGoal(value)}
           step={100}
         >
           <Slider.Track>
